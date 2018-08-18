@@ -1,0 +1,125 @@
+<html>
+
+<head>
+  <script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
+  </head>
+  <body>
+    <div style="height:75px"></div>
+
+    <div class="container" id="home">
+    <h1 class="text-center">A quote a day keeps the mind at play</h1>
+    <h4 class="text-center">-Unknown</h4>
+    <br>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-2">
+
+    </div>
+    <div class="col-sm-8">
+<div class="jumbotron">
+  <div id="quote"></div>
+  <div id="author"></div>
+  <h1 class="text-center"><div id="output"></div></h1>
+</div>
+</div>
+<div class="col-sm-2">
+</div>
+</div>
+</div>
+
+
+<div class="container">
+<div class="row">
+ <div class="col-md-2">
+</div>
+<div class="col-md-2">
+<button class="center" id="getQuote">Get Quote</button>
+<a  target=’_blank’ id="tweet" class="btn btn-social-icon btn-twitter">
+   <span class="fa fa-twitter"></span>
+ </a>
+  <a class="btn btn -social-icon btn-twittwer">
+
+      </a>
+</div>
+<div class="col-md-2">
+</div>
+</div>
+</div>
+
+
+
+<script>
+document.getElementById('getQuote').addEventListener('click', getQuote);
+var quote;
+var author;
+function getQuote() {
+/*  fetch("quotes.txt")
+  .then(function (res) {
+    return res.text();
+  })
+  .then(function (data) {
+    console.log(data);
+  })
+  */
+  var quoteId=Math.floor(Math.random()*35)
+
+  $.ajax({
+    url: 'https://api.jsonbin.io/b/5ac41c0e2be5ef0bbf46a9d1',
+    type: 'GET',
+    // headers: { //Required only if you are trying to access a private bin
+    //   'secret-key': <SECRET_KEY>
+    // },
+    // data: {
+    //   id:quoteId
+    // },
+    success: (data) => {
+      console.log(data[quoteId]);
+    quote=  $("#quote").html(data[quoteId].quote);
+console.log("this is the quote");
+    console.log(quote);
+       author = $("#author").html('-' + data[quoteId].author);
+    $('#tweet').attr('href', 'https://twitter.com/intent/tweet?text=' + '\'' + encodeURIComponent(data[quoteId].quote) + '\'' + ' -' + data[quoteId].author);
+    },
+    error: (err) => {
+      console.log(err.responseJSON);
+    }
+
+  });
+  };
+//
+//   var quote = document.getElementById('quote');
+// var author = document.getElementById('author');
+// var request = new XMLHttpRequest();
+// request.open("GET", "https://api.jsonbin.io/b/5ac41c0e2be5ef0bbf46a9d1");
+// request.send(null);
+// console.log(request);
+// request.onreadystatechange = function() {
+//   console.log(request);
+//   if(request.readyState === 4) {
+// console.log(quote);
+//     if(request.status === 200) {
+//       console.log(quote.innerHTML, request.responseText);
+//     } else {
+//       quote.innerHTML = 'An error occurred during your request: ' +  request.status + ' ' + request.statusText;
+//     }
+//   }
+// }
+//
+// request.open('Get', 'Bio.txt');
+// }
+$(document).ready(function(){
+getQuote();
+});
+
+</script>
+  </body>
+</html>
